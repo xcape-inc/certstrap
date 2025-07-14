@@ -382,6 +382,8 @@ jobs:
             type=sha
           labels: |
             org.opencontainers.image.ref.name=${{ github.ref }}
+        env:
+          DOCKER_METADATA_ANNOTATIONS_LEVELS: index,manifest,manifest-descriptor
 
       - name: Download Binaries (amd64)
         uses: actions/download-artifact@v4
@@ -425,7 +427,7 @@ jobs:
         run: |
           echo "docker image tags: ${{ steps.get_image_tags.outputs.tags }}"
           echo "docker image labels: ${{ steps.meta.outputs.labels }}"
-          echo "docker image description annotation: ${{ fromJSON(steps.meta.outputs.json).labels['org.opencontainers.image.description'] }}"
+          echo "docker image annotations: ${{ steps.meta.outputs.annotations }}"
 
       # build the images
       - name: Build and push Docker image
@@ -443,8 +445,8 @@ jobs:
           cache-from: type=registry,ref=ghcr.io/${{ env.IMAGE_NAME }}-cache
           cache-to: type=registry,ref=ghcr.io/${{ env.IMAGE_NAME }}-cache,mode=max
           # TODO: need to actually translate the labels to annotations, but this is a PoC
-          outputs: |
-            type=registry,annotation-manifest-descriptor.org.opencontainers.image.title=${{ fromJSON(steps.meta.outputs.json).labels['org.opencontainers.image.title'] }},annotation-manifest-descriptor.org.opencontainers.image.description="${{ fromJSON(steps.meta.outputs.json).labels['org.opencontainers.image.description'] }}",annotation.org.opencontainers.image.title=${{ fromJSON(steps.meta.outputs.json).labels['org.opencontainers.image.title'] }},annotation.org.opencontainers.image.description="${{ fromJSON(steps.meta.outputs.json).labels['org.opencontainers.image.description'] }}",annotation-index.org.opencontainers.image.title=${{ fromJSON(steps.meta.outputs.json).labels['org.opencontainers.image.title'] }},annotation-index.org.opencontainers.image.description="${{ fromJSON(steps.meta.outputs.json).labels['org.opencontainers.image.description'] }}"
+          outputs: type=registry
+          annotations: ${{ steps.meta.outputs.annotations }}
           build-args: |
             VERSION=${{ steps.get_versions.outputs.cur_version }}
             LONG_FORM_VERSION=${{ steps.get_versions.outputs.long_form_cur_version }}
