@@ -97,6 +97,11 @@ jobs:
           # TODO: need to make this long-lasting for main branch, short for eveything else
           retention-days: 90
 
+      - name: Setup go
+        uses: actions/setup-go@v5
+        with:
+          go-version: "1.24"
+
       - name: Convert coverage output to cobertura
         run: |
           go install github.com/juju/gocover-cobertura@latest
@@ -109,11 +114,6 @@ jobs:
           path: coverage.cobertura-amd64.xml
           # TODO: need to make this long-lasting for main branch, short for eveything else
           retention-days: 5
-
-      - name: Setup go
-        uses: actions/setup-go@v5
-        with:
-          go-version: "1.24"
 
       - name: Code Coverage Summary Report
         #uses: irongut/CodeCoverageSummary@v1.3.0
