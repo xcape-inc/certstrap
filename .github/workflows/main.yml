@@ -21,7 +21,7 @@ jobs:
   build-x64:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
+      - name: Checkout certstrap
         uses: actions/checkout@v4
         with:
           repository: square/certstrap
@@ -29,7 +29,7 @@ jobs:
           #ref: v1.3.0
           fetch-depth: 0
 
-      - name: Checkout
+      - name: Checkout Xcape code
         uses: actions/checkout@v4
         with:
           path: out
@@ -150,14 +150,15 @@ jobs:
   build-arm64:
     runs-on: ubuntu-24.04-arm
     steps:
-      - name: Checkout
+      - name: Checkout certstrap
         uses: actions/checkout@v4
         with:
           repository: square/certstrap
+          # 1.3.0 has broken tests and there isnt a new release for a LONG time; but master is presently working =/
           #ref: v1.3.0
           fetch-depth: 0
 
-      - name: Checkout
+      - name: Checkout Xcape code
         uses: actions/checkout@v4
         with:
           path: out
@@ -290,7 +291,7 @@ jobs:
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
-      - name: Checkout
+      - name: Checkout certstrap
         uses: actions/checkout@v4
         with:
           repository: square/certstrap
@@ -298,7 +299,7 @@ jobs:
           #ref: v1.3.0
           fetch-depth: 0
 
-      - name: Checkout
+      - name: Checkout Xcape code
         uses: actions/checkout@v4
         with:
           path: out
