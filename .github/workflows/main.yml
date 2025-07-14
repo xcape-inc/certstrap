@@ -85,6 +85,8 @@ jobs:
 
       - name: Run Unit Tests
         uses: robherley/go-test-action@v0
+        env:
+          GODEBUG: x509sha1=1
         with:
           testArguments: -timeout=300s -parallel=6 -coverprofile=coverage-amd64.txt ./...
 
@@ -208,6 +210,8 @@ jobs:
 
       - name: Run Unit Tests
         uses: robherley/go-test-action@v0
+        env:
+          GODEBUG: x509sha1=1
         with:
           testArguments: -timeout=300s -parallel=6 -coverprofile=coverage-arm64.txt ./...
 
