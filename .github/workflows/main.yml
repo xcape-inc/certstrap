@@ -290,10 +290,18 @@ jobs:
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
-      # Checkout the code
       - name: Checkout
         uses: actions/checkout@v4
         with:
+          repository: square/certstrap
+          # 1.3.0 has broken tests and there isnt a new release for a LONG time; but master is presently working =/
+          #ref: v1.3.0
+          fetch-depth: 0
+
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          path: out
           fetch-depth: 0
 
       # figure out what version this should be
@@ -379,20 +387,14 @@ jobs:
         id: dl_certstrap_amd64
         with:
           name: 'certstrap-amd64'
-          path: .docker
+          path: out/.docker
 
       - name: Download Binaries (arm64)
         uses: actions/download-artifact@v4
         id: dl_certstrap_arm64
         with:
           name: 'certstrap-arm64'
-          path: .docker
-
-      - name: Copy in the migrations
-        run: |
-          cp -a db .docker/db
-          mkdir .docker/cmd
-          cp -a cmd/client .docker/cmd/client
+          path: out/.docker
 
       # Add some more possible tags. Right now we have commit short-sha, branch name, semver component from the commit tag
       # This adds the value of BUILD_VER from above (eg. 1.0.1a2) and latest is this is the main branch
@@ -428,8 +430,8 @@ jobs:
       - name: Build and push Docker image
         uses: docker/build-push-action@v6
         with:
-          context: .docker
-          file: .docker/Dockerfile
+          context: out/.docker
+          file: out/.docker/Dockerfile
           pull: true
           # This is handled by the outputs directive
           #push: true
