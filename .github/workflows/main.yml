@@ -74,13 +74,13 @@ jobs:
       - name: Build amd64
         run: |
           go get ./...
-          make -f out/Makefile certstrap-server-linux-amd64 BINARY_VERSION=${{ steps.get_versions.outputs.build_version }} && mv certstrap-server-linux-amd64 certstrap-server-v${{ steps.get_versions.outputs.build_version }}-linux-amd64
+          make -f out/Makefile certstrap-linux-amd64 BINARY_VERSION=${{ steps.get_versions.outputs.build_version }} && mv certstrap-linux-amd64 certstrap-v${{ steps.get_versions.outputs.build_version }}-linux-amd64
 
       - name: Store build artifacts
         uses: actions/upload-artifact@v4
         with:
-          name: certstrap-server-amd64
-          path: certstrap-server-v${{ steps.get_versions.outputs.build_version }}-linux-amd64
+          name: certstrap-amd64
+          path: certstrap-v${{ steps.get_versions.outputs.build_version }}-linux-amd64
           retention-days: 5
 
       - name: Run Unit Tests
@@ -198,13 +198,13 @@ jobs:
       - name: Build arm64
         run: |
           go get ./...
-          make -f out/Makefile certstrap-server-linux-arm64 BINARY_VERSION=${{ steps.get_versions.outputs.build_version }} && mv certstrap-server-linux-arm64 certstrap-server-v${{ steps.get_versions.outputs.build_version }}-linux-arm64
+          make -f out/Makefile certstrap-linux-arm64 BINARY_VERSION=${{ steps.get_versions.outputs.build_version }} && mv certstrap-linux-arm64 certstrap-v${{ steps.get_versions.outputs.build_version }}-linux-arm64
 
       - name: Store build artifacts
         uses: actions/upload-artifact@v4
         with:
-          name: certstrap-server-arm64
-          path: certstrap-server-v${{ steps.get_versions.outputs.build_version }}-linux-arm64
+          name: certstrap-arm64
+          path: certstrap-v${{ steps.get_versions.outputs.build_version }}-linux-arm64
           retention-days: 5
 
       - name: Run Unit Tests
@@ -368,14 +368,14 @@ jobs:
         uses: actions/download-artifact@v4
         id: dl_certstrap_amd64
         with:
-          name: 'certstrap-server-amd64'
+          name: 'certstrap-amd64'
           path: .docker
 
       - name: Download Binaries (arm64)
         uses: actions/download-artifact@v4
         id: dl_certstrap_arm64
         with:
-          name: 'certstrap-server-arm64'
+          name: 'certstrap-arm64'
           path: .docker
 
       - name: Copy in the migrations
