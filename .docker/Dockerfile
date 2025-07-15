@@ -8,7 +8,7 @@ ARG TARGETOS
 ARG TARGETARCH
 COPY certstrap-*-${TARGETOS}-${TARGETARCH} /usr/bin/
 RUN addgroup -g 1000 certstrap \
-    && adduser certstrap -u 100 -G certstrap \
+    && adduser certstrap -u 100 -G -S -s /bin/sh certstrap \
     && chmod 755 /usr/bin/certstrap \
     && ln -s /usr/bin/certstrap-*-${TARGETOS}-${TARGETARCH} /usr/bin/certstrap/certstrap
 WORKDIR /home/certstrap
