@@ -10,7 +10,7 @@ COPY certstrap-*-${TARGETOS}-${TARGETARCH} /usr/bin/
 RUN addgroup -g 1000 certstrap \
     && adduser certstrap -u 100 -G certstrap -s /bin/sh -S \
     && chmod 755 /usr/bin/certstrap \
-    && ln -s /usr/bin/certstrap-*-${TARGETOS}-${TARGETARCH} /usr/bin/certstrap/certstrap
+    && ln -s /usr/bin/certstrap-*-${TARGETOS}-${TARGETARCH} /usr/bin/certstrap
 WORKDIR /home/certstrap
 USER certstrap
 ENTRYPOINT ["/usr/bin/certstrap"]
