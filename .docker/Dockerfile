@@ -12,4 +12,5 @@ RUN addgroup -g 1000 certstrap \
 WORKDIR /home/certstrap
 USER certstrap
 RUN mkdir /home/certstrap/workdir
+RUN mkdir /home/certstrap/workdir2
 ENTRYPOINT ["/usr/bin/certstrap"]
