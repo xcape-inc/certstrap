@@ -13,7 +13,7 @@ You are welcome to use our image as `ghcr.io/xcape-inc/certstrap`.
 
 Anything listed below as commands you can run as `docker run --rm -it -v ${PWD}:/home/certctrap ghcr.io/xcape-inc/certstrap` and add the parameters that would normally go to `certstrap`.
 
-The rest oif this README is largely copied from (https://github.com/square/certstrap)
+The rest of this README is largely copied from (https://github.com/square/certstrap)
 
 ## Common Uses
 
